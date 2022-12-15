@@ -56,7 +56,7 @@ def main(args):
     except Exception as e:
         print(e)
     finally:
-        if len(examples) == 0:
+        if not examples:
             logger.warn('No valid audio files were found.')
             return
         ds = Dataset.from_pandas(

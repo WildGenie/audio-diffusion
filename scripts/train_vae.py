@@ -102,10 +102,11 @@ class ImageLogger(Callback):
                     Image.fromarray(image, mode='RGB').convert('L')
                     if channels == 3 else Image.fromarray(image[:, :, 0]))
                 pl_module.logger.experiment.add_audio(
-                    tag + f"/{_}",
+                    f"{tag}/{_}",
                     normalize(audio),
                     global_step=pl_module.global_step,
-                    sample_rate=mel.get_sample_rate())
+                    sample_rate=mel.get_sample_rate(),
+                )
 
     def on_train_batch_end(self, trainer, pl_module, outputs, batch,
                            batch_idx):

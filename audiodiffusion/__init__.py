@@ -125,10 +125,14 @@ class AudioDiffusion:
             (float, np.ndarray): sample rate and raw audio or None
         """
         _, beats = beat_track(y=audio, sr=sample_rate, units='samples')
-        for beats_in_bar in [16, 12, 8, 4]:
-            if len(beats) > beats_in_bar:
-                return np.tile(audio[beats[0]:beats[beats_in_bar]], loops)
-        return None
+        return next(
+            (
+                np.tile(audio[beats[0] : beats[beats_in_bar]], loops)
+                for beats_in_bar in [16, 12, 8, 4]
+                if len(beats) > beats_in_bar
+            ),
+            None,
+        )
 
 
 '''
